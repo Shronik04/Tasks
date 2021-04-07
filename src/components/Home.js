@@ -97,7 +97,7 @@ function Home() {
             {page > 1 ? <button  className="m-2 btn btn-warning" onClick={previous}>Prev</button> : null}
            
            
-            {len < limit ? null : <button onClick={pageNext} className="m-2 btn btn-success">Next</button> } 
+            {len < limit || len>limit ? null : <button onClick={pageNext} className="m-2 btn btn-success">Next</button> } 
            
             <h5>Page {page}</h5>
             

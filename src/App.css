@@ -39,3 +39,41 @@
 .row{
   justify-content: center;
 }
+.texta{
+  height: 250px;
+  width: 50%;
+}
+.inpt{
+  width: 30% !important
+}
+.dash-blogs{
+  margin-top: 5%;
+  float: left;
+}
+.dash-form{
+  margin-top: 10%;
+
+  float: right;
+ 
+
+}
+.vl{
+  border-left: 1px solid black;
+  height:180vh;
+  left: 50%;
+ text-align: center;
+}
+
+
+.row{
+  margin: 0;
+}
+.dinp{
+  width: 50%;
+  
+  
+}
+.dtext{
+  width: 80%;
+  height: 270px;
+}
