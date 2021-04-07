@@ -1,10 +1,15 @@
 const Blog = require('../model/blogs')
+const jwt = require("jsonwebtoken");
 
 module.exports.add_blog = async (req, res) => {
-    const { title, description,date } = req.body;
-
+    const { title, description,date} = req.body;
+    console.log("headerssss", req.headers.utok);
+    const tok = req.headers.token
+    const veri = jwt.verify(tok, "SecretPass321");
+    console.log("veri", veri.id);
+//    const author=veri.id
     try {
-        const blog = await Blog.create({ title, description,date })
+        const blog = await Blog.create({ title, description,date,author })
         res.status(201).send({ blog: blog._id, message: "Blog added" })
     }
     catch (err) {
@@ -20,6 +25,7 @@ module.exports.update_blog = async (req, res) => {
 
         
             if (desc && head) {
+            //   if(doc.title !== head ){
                 if (desc.length < 100) {
                     res.status(400).send("Description should be atleast 100 characters long")
                 }
@@ -32,6 +38,11 @@ module.exports.update_blog = async (req, res) => {
                        console.log(err);
                    })
                 }
+                  
+            //   }
+            //   else {
+            //     res.status(400).send("this already exists")
+            // }
             }
             else {
                 res.status(400).send("fields cant be empyt")
@@ -47,8 +58,9 @@ module.exports.show_blogs = (req, res) => {
     
     Blog.find()
         .sort('-createdAt')
-        .limit(limit * 1)
-        .skip((page-1)*limit)
+        .limit(limit *1)
+        .skip((page - 1) * limit)
+        .populate('author')
         .then(result => res.send({total:result.length, result }))
         .catch(err => {
             
@@ -56,3 +68,7 @@ module.exports.show_blogs = (req, res) => {
             res.send(err)
         })
 }
+
+//userdash
+
+//homeshow

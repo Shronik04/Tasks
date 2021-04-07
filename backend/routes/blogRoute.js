@@ -1,7 +1,8 @@
 const { Router } = require("express")
 const router = Router();
 // const router = require('express').Router();
-const blogCont= require('../controller/blogCont')
+const blogCont = require('../controller/blogCont')
+const userCont =require('../controller/userCont')
 
 router.post('/addblog',
 
@@ -16,5 +17,11 @@ router.put("/update/:id",
 router.get("/blogs",
     blogCont.show_blogs
 )
+router.post('/user/signup',
+    userCont.signup_post
+)
 
+router.post('/user/login',
+    userCont.login_post
+)
 module.exports = router;

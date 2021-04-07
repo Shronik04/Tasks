@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
+
+
+
 const blogSchema = new mongoose.Schema({
 
     title: {
@@ -9,6 +13,11 @@ const blogSchema = new mongoose.Schema({
         type: String,
         minLength: [10, "Blog should be atleast 100 charaters long"],
         required:[true,"Blogs cant be empty, write something interesting"]
+    },
+    author: {
+        type: ObjectId,
+        ref: "user",
+        required:true
     }
   
 }, {timestamps:true})
