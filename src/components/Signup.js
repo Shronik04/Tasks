@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
 function Signup() {
 
     const [data, setData] = useState({
@@ -12,7 +13,7 @@ const [flag,setFlag]=useState(false)
     function signupform (e) {
         e.preventDefault();
 
-        axios.post(`http://localhost:4000/user/signup`, data)
+       data && axios.post(`http://localhost:5000/user/signup`, data)
             .then((res) => {
                 console.log(res);
                 setFlag(!flag)

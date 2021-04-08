@@ -1,11 +1,45 @@
-import React,{useState} from 'react'
-
-function Login() {
+import React,{useState,useEffect} from 'react'
+import axios from 'axios'
+import cookie from 'react-cookies'
+import Dashboard from './Dashboard'
+import { Redirect } from 'react-router-dom'
+function Login({check, setCheck}) {
 
     const [dataL, setDataL]=useState({email:"",
-password:""}
+      password: ""
+    })
+  const [re,setRe]=useState(false)
 
-   )
+  useEffect(() => {
+    console.log("login data", dataL);
+  })
+  
+    function submitForm(e) {
+      e.preventDefault();
+           axios
+      .post("http://localhost:5000/user/login", dataL)
+      .then(res => {
+          setDataL({
+            ...dataL,
+            
+            email: '',
+            password1: '',
+          
+          })
+          console.log("ressss",res.data)
+        cookie.save("jwt", res.data.token)
+        setRe(!re)
+        setCheck(!check)
+      })
+             .catch((err) => {
+          console.log(err.response);
+      })
+   
+  }
+  
+  
+  
+  
     return (
         <div>
         <form onSubmit={submitForm}>
@@ -34,10 +68,10 @@ password:""}
       }}
     />
     <br />
-    <span>Forgot Password?<a onClick={forgot} href="">Reset Here</a></span><br />
+   
     <button type="submit" className="btn btn-secondary m-2">submit</button>
     </form>
-    {dash==1?(<Home />):null}
+    {re?(<Redirect to="/dashboard" />):null}
     </div>
     )
 }

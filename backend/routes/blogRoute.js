@@ -20,8 +20,10 @@ router.get("/blogs",
 router.post('/user/signup',
     userCont.signup_post
 )
-
 router.post('/user/login',
     userCont.login_post
+)
+router.get('/user/blogs',
+    blogCont.user_blogs
 )
 module.exports = router;

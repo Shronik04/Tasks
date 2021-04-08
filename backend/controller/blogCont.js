@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 
 module.exports.add_blog = async (req, res) => {
     const { title, description,date} = req.body;
-    console.log("headerssss", req.headers.utok);
-    const tok = req.headers.token
+    console.log("headerssss", req.headers.jwt);
+    const tok = req.headers.jwt
     const veri = jwt.verify(tok, "SecretPass321");
     console.log("veri", veri.id);
-//    const author=veri.id
+   const author=veri.id
     try {
         const blog = await Blog.create({ title, description,date,author })
         res.status(201).send({ blog: blog._id, message: "Blog added" })
@@ -53,10 +53,15 @@ module.exports.update_blog = async (req, res) => {
 
 module.exports.show_blogs = (req, res) => {
 
-    const { page,limit } = req.query;
-   
-    
-    Blog.find()
+    const { page, limit } = req.query;
+
+    try {
+        const tok = req.headers.jwt
+        const veri = jwt.verify(tok, "SecretPass321");
+        console.log("veri", veri.id);
+        const author = veri.id
+        
+        Blog.find({author:{$ne:author}})
         .sort('-createdAt')
         .limit(limit *1)
         .skip((page - 1) * limit)
@@ -67,8 +72,47 @@ module.exports.show_blogs = (req, res) => {
             console.log("finddddd");
             res.send(err)
         })
+
+        console.log("TRYYY");
+    }
+
+    catch {
+
+        console.log("CATCHHHh");
+        Blog.find()
+        .sort('-createdAt')
+        .limit(limit *1)
+        .skip((page - 1) * limit)
+        .populate('author')
+        .then(result => res.send({total:result.length, result }))
+        .catch(err => {
+            
+            console.log("finddddd");
+            res.send(err)
+        })
+    }
+    
 }
 
+
+
+module.exports.user_blogs = (req, res) => {
+
+    const tok = req.headers.jwt
+    const veri = jwt.verify(tok, "SecretPass321");
+    console.log("veri", veri.id);
+    const authorid = veri.id
+
+    Blog.find({ author:authorid })
+        .populate("author")
+        .then((result) => {
+            // console.log(result);
+        res.status(200).send(result)
+        })
+        .catch((err) => {
+        console.log(err);
+    })
+}
 //userdash
 
 //homeshow

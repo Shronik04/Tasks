@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
-
+const joi =require('joi')
 
 
 const blogSchema = new mongoose.Schema({
@@ -9,9 +9,9 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required:[true, "PLease give a title"]
     },
-    description: {
+    description:{
         type: String,
-        minLength: [10, "Blog should be atleast 100 charaters long"],
+        minLength: [100, "Blog should be atleast 100 charaters long"],
         required:[true,"Blogs cant be empty, write something interesting"]
     },
     author: {
