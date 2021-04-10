@@ -1,16 +1,25 @@
 const Blog = require('../model/blogs')
 const jwt = require("jsonwebtoken");
+const multer =require('multer')
+const path = require('path');
+
+
 
 module.exports.add_blog = async (req, res) => {
-    const { title, description,date} = req.body;
+    
+    
+    const { title, description, date } = req.body;
+    // const image = req.file;
     console.log("headerssss", req.headers.jwt);
     const tok = req.headers.jwt
     const veri = jwt.verify(tok, "SecretPass321");
     console.log("veri", veri.id);
-   const author=veri.id
+    const author = veri.id
+      console.log(req.file,req.body.Data);
     try {
         const blog = await Blog.create({ title, description,date,author })
         res.status(201).send({ blog: blog._id, message: "Blog added" })
+        
     }
     catch (err) {
         res.status(400).send(err.message)
@@ -21,9 +30,7 @@ module.exports.update_blog = async (req, res) => {
 
     const desc = req.body.description;
     const head=req.body.title
-    
-
-        
+ 
             if (desc && head) {
             //   if(doc.title !== head ){
                 if (desc.length < 100) {
@@ -103,7 +110,9 @@ module.exports.user_blogs = (req, res) => {
     console.log("veri", veri.id);
     const authorid = veri.id
 
-    Blog.find({ author:authorid })
+    Blog.find({ author: authorid })
+    .sort('-createdAt')
+        
         .populate("author")
         .then((result) => {
             // console.log(result);
@@ -113,6 +122,12 @@ module.exports.user_blogs = (req, res) => {
         console.log(err);
     })
 }
+
+
+// module.exports = upload;
+
+
+
 //userdash
 
 //homeshow

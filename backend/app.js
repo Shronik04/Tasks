@@ -3,15 +3,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config')
 const route = require('./routes/blogRoute')
-const userCheck= require('./middleware/checkId')
+const userCheck = require('./middleware/checkId')
+const upload =require('./middleware/mult')
+
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 app.use(route)
 app.use("/user",userCheck)
-
-
+app.use("/images/",express.static('uploads'))
+// app.use('/upload',upload )
 
 
 mongoose.connect(process.env.DB_CONNECT,

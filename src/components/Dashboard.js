@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React,{useEffect,useState} from 'react'
 import cookie from 'react-cookies'
+import { toast } from "react-toastify";
 function Dashboard() {
 
     const [blg, setBlg] = useState();
@@ -11,15 +12,21 @@ function Dashboard() {
     const limit = 6;
     const [len, setLen] = useState();
 
-
-
+    // const [demo, setDemo]=useState(false)
+ const [im, setIm] = useState();
     const [newBlog, setNewBlog] = useState({
         title: "",
-        description:""
+        description: "",
+      
     })
+   
 
     useEffect(() => {
+        console.log("image check",im);
+})
+    useEffect(() => {
         const token = cookie.load("jwt")
+  
         setTok(token)
         tok && axios.get(`http://localhost:5000/blogs?page=${page}&limit=${limit}`, tok && {
             headers: {
@@ -35,33 +42,41 @@ function Dashboard() {
             .catch((err) => {
                 console.log(err);
             })
-    }, [tok,page])
+    }, [tok, page])
+  
+  
     
     const addBlog = (e) => {
+       
         e.preventDefault();
-
-       newBlog && axios.post(`http://localhost:5000/addblog`, newBlog, tok && {
-            headers: {
-                "jwt":tok
-            }
-        })
         
-            .then((res) => {
+         newBlog &&
+        axios.post(`http://localhost:5000/addblog`, newBlog,tok && {
+            headers: {
+                "jwt": tok,
+                'content-type':'multipart/form-data'
+            }
+        })  
+        
+           .then((res) => {
                 console.log(res.data)
-                alert(res.data.message);
-                setNewBlog({
-                   
-                    
-                        title: "",
-                        description:""
-                    
-                })
+              alert("Blog added")
+            //    toast.error("Blog added")
+            setNewBlog({
+                title: "",
+                description: "",
+            
+            })
+       
               
             })
-            .catch((err) => {
+           .catch((err) => {
+   
                 console.log(err.response);
         })
     }
+
+
  
     function pageNext() {
         setPage(page+1)
@@ -69,6 +84,16 @@ function Dashboard() {
 
     function previous() {
         setPage(page-1)
+    }
+    
+    const handleFile= (file)=> {
+        const formdata = new FormData();
+        formdata.append("file", file);
+
+        console.log("This is formData",formdata);
+        setIm(formdata)
+        
+        // setNewBlog({...newBlog,file:formdata})
     }
 
     return (
@@ -114,13 +139,15 @@ function Dashboard() {
                 
             <div className="vl "></div>
             <div className="dash-form col">
-                <form className="dform" onSubmit={(e)=>addBlog(e)}>
+                <form className="dform" onSubmit={(e)=>addBlog(e)} >
                     <legend>Add Blog</legend><hr />
                     <label>Title</label><br />
                     <input type='text' className="dinp" placeholder="Blog's title" onChange={(e) => setNewBlog({...newBlog, title:e.target.value}) }/><br /><br />
-                    <label>Description</label><br />
-                    <textarea type='text' className="dtext" placeholder="Description" onChange={(e) => setNewBlog({...newBlog, description:e.target.value}) }/><br />
-                    <button type="submit" className="btn btn-primary">submit</button>
+                        <label>Description</label><br />
+                        <textarea type='text' className="dtext" placeholder="Description" onChange={(e) => setNewBlog({ ...newBlog, description: e.target.value })} /><br />
+                        <input type="file" name="file" onChange={ (e)=>handleFile(e.target.files[0])}/><br /><br />
+                        
+                    <button type="submit" className="btn btn-primary" >submit</button>
 
                 </form>
                 </div>

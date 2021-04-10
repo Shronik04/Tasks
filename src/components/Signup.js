@@ -22,8 +22,6 @@ const [flag,setFlag]=useState(false)
         })
     }
 
-
-
     return (
         <div>
       <form onSubmit={(e)=>signupform(e)} className="form">

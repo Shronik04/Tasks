@@ -10,6 +10,7 @@ import UserBlogs from "./components/UserBlogs";
 import {useState,useEffect} from 'react'
 import Signup from "./components/Signup";
 import cookie from 'react-cookies'
+import Upload from "./components/Upload";
 function App() {
 
   const [logi, setLogi] = useState(false)
@@ -40,7 +41,7 @@ history.push('/')
 		<div className="App">
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div className="container-fluid">
-					<Link to="/">HOME</Link>
+				{check ?null:<Link to="/">HOME</Link>}	
 					<div className="navbar-nav ml-auto">
             {check ? <><button onClick={(e)=>logout(e)}>Logout</button>
               <Link to="/dashboard">
@@ -69,7 +70,9 @@ history.push('/')
 
 				<Route exact path="/login" ><Login check={check} setCheck={setCheck} /></Route>
 
-				<Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />
+				<Route exact path="/uplaod" component={Upload} />
+        
 
 				<Route exact path="*" component={Error} />
       </Switch>

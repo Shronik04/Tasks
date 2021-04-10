@@ -3,9 +3,12 @@ const router = Router();
 // const router = require('express').Router();
 const blogCont = require('../controller/blogCont')
 const userCont =require('../controller/userCont')
+const Upload = require('../middleware/mult')
+
 
 router.post('/addblog',
 
+    // Upload.single('file'),
     blogCont.add_blog
 )
 
