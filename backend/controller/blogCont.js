@@ -15,7 +15,7 @@ module.exports.add_blog = async (req, res) => {
     const veri = jwt.verify(tok, "SecretPass321");
     console.log("veri", veri.id);
     const author = veri.id
-      console.log(req.file,req.body.Data);
+    //   console.log(req.file,req.body.Data);
     try {
         const blog = await Blog.create({ title, description,date,author })
         res.status(201).send({ blog: blog._id, message: "Blog added" })
