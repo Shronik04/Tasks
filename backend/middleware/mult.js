@@ -1,21 +1,21 @@
-const multer = require('multer')
-const router = require('express').Router();
-const UploadImage = require('../model/imageMod')
-const path = require('path');
+// const multer = require('multer')
+// const router = require('express').Router();
+// const UploadImage = require('../model/imageMod')
+// const path = require('path');
 
-const Storage = multer.diskStorage({
-    destination: "./uploads",
-    filename:function (req, file, cb) {
-        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-    }
-})
+// const Storage = multer.diskStorage({
+//     destination: "./uploads",
+//     filename:function (req, file, cb) {
+//         cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+//     }
+// })
 
-const upload = multer({
-    storage: Storage,
+// const upload = multer({
+//     storage: Storage,
    
-})
+// })
 
-module.exports = upload;
+// module.exports = upload;
  
 // var upload = multer({
 //     storage:Storage
