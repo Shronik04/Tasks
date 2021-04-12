@@ -2,12 +2,13 @@ import axios from 'axios';
 import React,{useEffect,useState} from 'react'
 import cookie from 'react-cookies'
 import { toast } from "react-toastify";
+import FileBase from 'react-file-base64';
 function Dashboard() {
 
     const [blg, setBlg] = useState();
     const [tok, setTok] = useState('');
-    const[up,setUp]=useState()
-    const [uId, setUId] = useState();
+    // const[up,setUp]=useState()
+    // const [uId, setUId] = useState();
     const [page, setPage] = useState(1);
     const limit = 6;
     const [len, setLen] = useState();
@@ -17,12 +18,13 @@ function Dashboard() {
     const [newBlog, setNewBlog] = useState({
         title: "",
         description: "",
+        file:''
       
     })
    
 
     useEffect(() => {
-        console.log("image check",im);
+        console.log("image check",newBlog);
 })
     useEffect(() => {
         const token = cookie.load("jwt")
@@ -54,7 +56,7 @@ function Dashboard() {
         axios.post(`http://localhost:5000/addblog`, newBlog,tok && {
             headers: {
                 "jwt": tok,
-                'content-type':'multipart/form-data'
+             
             }
         })  
         
@@ -110,8 +112,9 @@ function Dashboard() {
                 <div className="row">
                 {blg && blg.map((i, index) => (
                 
-                        <div className="card p-4 col-md-4 m-2">
-                            <div className="card-body" key={index} >
+                        <div className="card p-4 col-md-4 m-2 cmain">
+                            <div key={index} >
+                <div><img src={i.file} alt="Image" className="image"/></div>  
                         
                         <div><b>Title:</b> {i.title}</div><br /><hr/>
                         <div>
@@ -145,10 +148,10 @@ function Dashboard() {
                     <input type='text' className="dinp" placeholder="Blog's title" onChange={(e) => setNewBlog({...newBlog, title:e.target.value}) }/><br /><br />
                         <label>Description</label><br />
                         <textarea type='text' className="dtext" placeholder="Description" onChange={(e) => setNewBlog({ ...newBlog, description: e.target.value })} /><br />
-                        <input type="file" name="file" onChange={ (e)=>handleFile(e.target.files[0])}/><br /><br />
-                        
+                        {/* <input type="file" multiple={false} onDone={({ base64 }) => setNewBlog({ ...newBlog, file: base64 })}/><br /><br /> */}
+                        <span><FileBase type="file" multiple={false} onDone={({ base64 }) => setNewBlog({ ...newBlog, file: base64 })} /></span>
                     <button type="submit" className="btn btn-primary" >submit</button>
-
+                    
                 </form>
                 </div>
                

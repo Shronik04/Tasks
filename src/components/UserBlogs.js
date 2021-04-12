@@ -61,10 +61,11 @@ function UserBlogs() {
             <div className="row">
                 
             {ub && ub.map((i, index) => (
-                <div className="card p-4 col-md-4 m-2">
-                <div className="card-body" key={index} >
+                <div className="card p-4 col-md-4 m-2 cmain">
+                <div key={index} >
+                <div><img src={i.file} alt="Image" className="image"/></div>  
             
-            <div><b>Title:</b> {i.title}</div><br /><hr/>
+            <div><b>Title:</b> {i.title}</div><hr/>
             <div>
                 <b>Description:</b> {i.description}
             </div><hr />
@@ -73,7 +74,7 @@ function UserBlogs() {
             </div>
             <button className="m-2 btn btn-secondary" onClick={(e) => {showForm(e,index) }}>Edit</button>
             
-            {edit && idx == index ? <form onSubmit={(e)=>updateBlog(e,index)}>
+                        {edit && idx == index ? <form onSubmit={(e) => updateBlog(e, index)}>
                             <label>Title:</label><br /><input type="text" value={i.title} onChange={(e) => { editTitle(e, index) }} /> <br />
                 <label>Description:</label><br /><textarea type="text" value={i.description} onChange={(e)=>{editDesc(e,index)}} /><br />
                             <button type="submit" className="btn btn-primary m-1">Done</button>

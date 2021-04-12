@@ -19,17 +19,17 @@ const blogSchema = new mongoose.Schema({
         ref: "user",
         required:true
     },
-    // file: {
-    //     type:String,
-    //     fieldname: String,
-    //     originalname: String,
-    //     encoding: String,
-    //     mimetype: String,
-    //     destination: String,
-    //     path: String,
-    //     filename: String, 
-    //     required:true
-    // }
+    file: {
+        type:String,
+        // fieldname: String,
+        // originalname: String,
+        // encoding: String,
+        // mimetype: String,
+        // destination: String,
+        // path: String,
+        // filename: String, 
+        required:true
+    }
   
 }, {timestamps:true})
 

@@ -73,7 +73,8 @@ function Home({logi ,setLogi}) {
                    
                         {/* {console.log("sjkanskjasaa  author",  i.author)} */}
 
-                   {edit?null: <div className="card p-4 col-md-4 m-2" ><div className="card-body" key={index} >
+                   {edit?null: <div className="card p-3 col-md-4 m-2 cmain" ><div  key={index} >
+                <div><img src={i.file} alt="Image" className="image"/></div>  
                         
                         <div><b>Title:</b> {i.title}</div><br /><hr/>
                         <div>

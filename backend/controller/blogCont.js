@@ -8,16 +8,16 @@ const path = require('path');
 module.exports.add_blog = async (req, res) => {
     
     
-    const { title, description, date } = req.body;
+    const { title, description, date,file } = req.body;
     // const image = req.file;
     console.log("headerssss", req.headers.jwt);
     const tok = req.headers.jwt
     const veri = jwt.verify(tok, "SecretPass321");
     console.log("veri", veri.id);
     const author = veri.id
-    //   console.log(req.file,req.body.Data);
+      console.log(req.file,req.body);
     try {
-        const blog = await Blog.create({ title, description,date,author })
+        const blog = await Blog.create({ title, description,date,author,file })
         res.status(201).send({ blog: blog._id, message: "Blog added" })
         
     }
@@ -124,7 +124,7 @@ module.exports.user_blogs = (req, res) => {
 }
 
 
-// module.exports = upload;
+
 
 
 
