@@ -112,7 +112,6 @@ function Dashboard() {
 										<div>
 											<img src={i.file} alt="Image" className="image" />
 										</div>
-
 										<div>
 											<b>Title:</b> {i.title}
 										</div>

@@ -19,7 +19,7 @@ function Home({ logi, setLogi }) {
 			.then((res) => {
 				console.log(res.data.result);
 				setBlogs(res.data.result);
-				// setAuth(res.data.result,console.log("authhh",res.data.result.author))
+				// setAuth(res.data.result)
 				setLen(res.data.total);
 				setEdit(false);
 				// console.log("data lentghhhhh", len);

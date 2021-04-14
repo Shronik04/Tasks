@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
-const joi = require("joi");
+const Joi = require("joi");
+Joi.objectId = require('joi-objectid')(Joi)
+
+
+
+// const blogSchema = Joi.object({
+// 	title: Joi.string().required(),
+// 	description: Joi.string().min(10).required(),
+// 	author: Joi.objectId().ref('user').required()
+// })
 
 const blogSchema = new mongoose.Schema(
 	{
@@ -20,12 +29,13 @@ const blogSchema = new mongoose.Schema(
 		},
 		file: {
 			type: String,
-
 			required: true,
 		},
 	},
 	{ timestamps: true }
 );
+
+
 
 blogSchema.post("save", async function (doc, next) {
 	console.log("Blog added", doc);

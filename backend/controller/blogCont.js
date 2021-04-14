@@ -29,20 +29,28 @@ module.exports.update_blog = async (req, res) => {
 		if (desc.length < 100) {
 			res.status(400).send("Description should be atleast 100 characters long");
 		} else {
-			Blog.updateOne(
-				{ _id: req.params.id },
-				{ $set: { title: head, description: desc } }
+			Blog.find(
+				{ title: req.body.title }
 			)
-				.then((result) => res.status(200).send("Updated successfully"))
+				.then((result) => {
+					if (result=="" ) {
+						Blog.updateOne({_id: req.params.id},
+							{ $set: { title: head, description: desc } })
+							.then((resp) => res.status(200).send("Updated"))
+							.catch((err) => {
+							res.status(400).send(err)
+						})
+					}
+					else {
+						res.status(400).send("This title already exists")
+					}
+				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
 
-		//   }
-		//   else {
-		//     res.status(400).send("this already exists")
-		// }
+	
 	} else {
 		res.status(400).send("fields cant be empyt");
 	}
@@ -106,3 +114,4 @@ module.exports.user_blogs = (req, res) => {
 //userdash
 
 //homeshow
+

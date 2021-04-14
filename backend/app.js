@@ -23,6 +23,6 @@ mongoose
 	})
 	.then((result) => {
 		app.listen(5000);
-		console.log("server is running at 5000");
+		console.log("DB is connected & server is running at 5000");
 	})
 	.catch((err) => console.log("Error in connecting DB", err));
